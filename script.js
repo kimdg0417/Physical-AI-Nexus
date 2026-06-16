@@ -1,3 +1,21 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCGzv19D25q6ySnd7CFdfZI28SYW20oCNY",
+  authDomain: "dasdasd-f9f5e.firebaseapp.com",
+  projectId: "dasdasd-f9f5e",
+  storageBucket: "dasdasd-f9f5e.firebasestorage.app",
+  messagingSenderId: "557206660933",
+  appId: "1:557206660933:web:2a9275c20f6f299623c02c",
+  measurementId: "G-B589VDLY7S"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- i18n Logic ---
     const translations = {
@@ -461,29 +479,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Board Logic ---
     const postForm = document.getElementById('post-form');
     const postList = document.getElementById('post-list');
-    const loadPosts = () => {
+    const loadPosts = async () => {
         if(!postList) return;
-        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-        postList.innerHTML = '';
-        if (posts.length === 0) {
-            postList.innerHTML = '<p style="text-align:center; opacity:0.6;">아직 게시글이 없습니다. 첫 글을 남겨보세요!</p>';
-            return;
+        postList.innerHTML = '<div class="loading-spinner">Loading from Nexus Cloud...</div>';
+        
+        try {
+            const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+            const querySnapshot = await getDocs(q);
+            postList.innerHTML = '';
+            
+            if (querySnapshot.empty) {
+                postList.innerHTML = '<p style="text-align:center; opacity:0.6;">아직 게시글이 없습니다. 첫 글을 남겨보세요!</p>';
+                return;
+            }
+
+            querySnapshot.forEach((docSnap) => {
+                const post = docSnap.data();
+                const postId = docSnap.id;
+                const date = post.createdAt ? post.createdAt.toDate().toLocaleString() : 'Just now';
+                
+                const postEl = document.createElement('div');
+                postEl.className = 'card'; postEl.style.marginBottom = '20px';
+                postEl.innerHTML = `
+                    <div class="post-meta"><span class="author-badge">${post.author || '익명'}</span><span>${date}</span></div>
+                    <div class="post-header"><h4 style="color:var(--secondary-color); margin:0;">${post.title}</h4></div>
+                    <p style="margin: 15px 0;">${post.content}</p>
+                    ${post.image ? `<img src="${post.image}" class="post-image" alt="Post Image">` : ''}
+                    <div style="margin-top:20px; display:flex; justify-content: flex-end; gap:15px;">
+                         <button class="theme-toggle" style="padding: 4px 10px; font-size: 0.7rem;" data-id="${postId}" onclick="window.handleDeletePost('${postId}', '${post.password}')">삭제</button>
+                    </div>
+                `;
+                postList.appendChild(postEl);
+            });
+        } catch (error) {
+            console.error("Error loading posts: ", error);
+            postList.innerHTML = '<p style="text-align:center; color:red;">데이터를 불러오는 중 오류가 발생했습니다.</p>';
         }
-        posts.reverse().forEach((post, index) => {
-            const date = new Date(post.id).toLocaleString();
-            const postEl = document.createElement('div');
-            postEl.className = 'card'; postEl.style.marginBottom = '20px';
-            postEl.innerHTML = `
-                <div class="post-meta"><span class="author-badge">${post.author || '익명'}</span><span>${date}</span></div>
-                <div class="post-header"><h4 style="color:var(--secondary-color); margin:0;">${post.title}</h4></div>
-                <p style="margin: 15px 0;">${post.content}</p>
-                ${post.image ? `<img src="${post.image}" class="post-image" alt="Post Image">` : ''}
-                <div style="margin-top:20px; display:flex; justify-content: flex-end; gap:15px;">
-                     <button class="theme-toggle" style="padding: 4px 10px; font-size: 0.7rem;" onclick="deletePost(${posts.length - 1 - index})">삭제</button>
-                </div>
-            `;
-            postList.appendChild(postEl);
-        });
     };
 
     if (postForm) {
@@ -494,6 +525,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const content = document.getElementById('post-content').value;
             const password = document.getElementById('post-password').value;
             const imageFile = document.getElementById('post-image').files[0];
+            
+            const submitBtn = postForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Uploading to Cloud...';
+
             let imageData = null;
             if (imageFile) {
                 imageData = await new Promise((resolve) => {
@@ -501,22 +537,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     reader.readAsDataURL(imageFile);
                 });
             }
-            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-            posts.push({ id: Date.now(), author, password, title, content, image: imageData });
-            localStorage.setItem('posts', JSON.stringify(posts));
-            postForm.reset(); loadPosts();
+
+            try {
+                await addDoc(collection(db, "posts"), {
+                    author,
+                    title,
+                    content,
+                    password,
+                    image: imageData,
+                    createdAt: serverTimestamp()
+                });
+                postForm.reset();
+                await loadPosts();
+            } catch (error) {
+                console.error("Error adding doc: ", error);
+                alert("게시글 저장에 실패했습니다.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '게시글 등록하기';
+            }
         });
     }
 
-    window.deletePost = (index) => {
-        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
-        const targetPost = posts[index];
+    window.handleDeletePost = async (id, correctPassword) => {
         const inputPass = prompt('비밀번호를 입력하세요:');
-        if (inputPass === targetPost.password) {
-            posts.splice(index, 1);
-            localStorage.setItem('posts', JSON.stringify(posts));
-            loadPosts();
-        } else { alert('비밀번호가 틀렸습니다.'); }
+        if (inputPass === correctPassword) {
+            try {
+                await deleteDoc(doc(db, "posts", id));
+                alert('게시글이 삭제되었습니다.');
+                await loadPosts();
+            } catch (error) {
+                console.error("Error deleting doc: ", error);
+                alert('삭제 중 오류가 발생했습니다.');
+            }
+        } else if (inputPass !== null) {
+            alert('비밀번호가 틀렸습니다.');
+        }
     };
     if (postList) loadPosts();
 
