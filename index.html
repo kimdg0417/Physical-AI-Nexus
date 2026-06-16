@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical AI Nexus : 현실 세계를 움직이는 인공지능</title>
+    <meta name="description" content="피지컬 AI(Physical AI)는 로봇과 기계가 스스로 판단하고 행동하는 차세대 인공지능 기술입니다.">
+    <!-- OpenGraph for Social Media -->
+    <meta property="og:title" content="Physical AI Nexus">
+    <meta property="og:description" content="AI가 현실 세계를 움직이다. 로봇소프트웨어공학의 미래.">
+    <meta property="og:image" content="assets/hero_new.png">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Signature Intro -->
+    <div id="signature-intro">
+        <div class="hand-container">
+            <img src="assets/hand_digital.png" id="hand-digital" class="intro-hand" alt="Digital Hand">
+            <img src="assets/hand_robot.png" id="hand-robot" class="intro-hand" alt="Robot Hand">
+        </div>
+        <div class="intro-text">PHYSICAL AI NEXUS</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Physical AI Nexus
+            </a>
+            <ul class="nav-links">
+                <li><a href="#evolution" data-i18n="nav_evolution">AI Evolution</a></li>
+                <li><a href="#about" data-i18n="nav_about">Definition</a></li>
+                <li><a href="#tech" data-i18n="nav_tech">Technologies</a></li>
+                <li><a href="#apps" data-i18n="nav_apps">Applications</a></li>
+                <li class="dropdown">
+                    <a href="community.html" data-i18n="nav_community">Community</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="community.html" data-i18n="nav_comm_lounge">Community Lounge</a></li>
+                        <li><a href="community.html#contact" data-i18n="nav_inquiry">Inquiry</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav-extra">
+                <select id="lang-selector" class="lang-select">
+                    <option value="ko">KO</option>
+                    <option value="en">EN</option>
+                    <option value="ja">JA</option>
+                    <option value="zh">ZH</option>
+                </select>
+                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Dark Mode">Dark Mode</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-data-flow"></div>
+        <div class="hero-tech-grid"></div>
+        <div class="hero-hud">
+            <div class="hud-circle hud-circle-inner"></div>
+            <div class="hud-circle hud-circle-outer"></div>
+            <div class="hud-data-lines"></div>
+            <div class="scanline"></div>
+        </div>
+        <div class="hero-content">
+            <h1 data-i18n="hero_h1">Physical AI <span class="highlight">Nexus</span></h1>
+            <p data-i18n="hero_p">Intelligence in Motion, Excellence in Action</p>
+            <div class="hero-btns">
+                <a href="#about" class="btn btn-primary" data-i18n="hero_btn_learn">Learn More</a>
+                <a href="#tech" class="btn btn-outline" data-i18n="hero_btn_tech">Explore Tech</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. AI Evolution -->
+    <section id="evolution">
+        <div class="container reveal-on-scroll">
+            <div class="section-title">
+                <h2 data-i18n="evo_title">AI Evolution</h2>
+                <p data-i18n="evo_subtitle">보는 AI, 그리는 AI를 넘어 실제 세상을 움직이는 피지컬 AI로의 진화</p>
+            </div>
+            <div class="evolution-path">
+                <div class="evo-step">
+                    <div class="evo-icon">👁️</div>
+                    <h4 data-i18n="evo_1_h">Perception AI</h4>
+                    <p data-i18n="evo_1_p">인지: 환경을 구별하는 눈</p>
+                </div>
+                <div class="evo-arrow">→</div>
+                <div class="evo-step">
+                    <div class="evo-icon">✍️</div>
+                    <h4 data-i18n="evo_2_h">Generative AI</h4>
+                    <p data-i18n="evo_2_p">생성: 창작하는 손</p>
+                </div>
+                <div class="evo-arrow">→</div>
+                <div class="evo-step">
+                    <div class="evo-icon">🧠</div>
+                    <h4 data-i18n="evo_3_h">Agentic AI</h4>
+                    <p data-i18n="evo_3_p">자율: 계획하는 뇌</p>
+                </div>
+                <div class="evo-arrow">→</div>
+                <div class="evo-step highlight-step">
+                    <div class="evo-icon">🤖</div>
+                    <h4 data-i18n="evo_4_h">Physical AI</h4>
+                    <p data-i18n="evo_4_p">행동: 옮기는 로봇</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. What is Physical AI -->
+    <section id="about">
+        <div class="container reveal-on-scroll">
+            <div class="section-title">
+                <h2 data-i18n="about_title">What is Physical AI?</h2>
+                <p data-i18n="about_subtitle">센서와 카메라를 통해 주변 환경을 인식하고, 스스로 판단하여 실제 행동을 수행하는 차세대 지능형 시스템</p>
+            </div>
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="badge">Perception</div>
+                    <h3 data-i18n="about_item1_h">주변 인식</h3>
+                    <p data-i18n="about_item1_p">카메라, 라이다(LiDAR), 센서를 통해 현실 세계의 데이터를 실시간으로 파악합니다.</p>
+                </div>
+                <div class="card">
+                    <div class="badge">Reasoning</div>
+                    <h3 data-i18n="about_item2_h">지능적 판단</h3>
+                    <p data-i18n="about_item2_p">딥러닝과 강화학습을 통해 상황을 분석하고 최적의 행동 방침을 결정합니다.</p>
+                </div>
+                <div class="card">
+                    <div class="badge">Action</div>
+                    <h3 data-i18n="about_item3_h">물리적 행동</h3>
+                    <p data-i18n="about_item3_p">결정된 로직에 따라 로봇 팔이나 차량의 조향을 물리적으로 제어합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Core Technologies -->
+    <section id="tech">
+        <div class="container reveal-on-scroll">
+            <div class="section-title">
+                <h2 data-i18n="tech_title">Core Technologies</h2>
+                <p data-i18n="tech_subtitle">Physical AI를 지탱하는 5가지 핵심 기술 기둥</p>
+            </div>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3 data-i18n="tech_1_h">Computer Vision</h3>
+                    <p data-i18n="tech_1_p">사람, 사물, 장애물을 완벽히 식별하여 공간 지각 능력을 부여합니다.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="tech_2_h">Sensor Fusion</h3>
+                    <p data-i18n="tech_2_p">Camera, LiDAR, GPS, Radar 데이터를 통합하여 정밀한 상황 인식을 지원합니다.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="tech_3_h">Reinforcement Learning</h3>
+                    <p data-i18n="tech_3_p">시뮬레이션과 실습을 통한 수억 번의 시행착오 끝에 최적의 거동을 학습합니다.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="tech_4_h">Digital Twin</h3>
+                    <p data-i18n="tech_4_p">가상 공간에 실제 환경을 복제하여 안전하고 빠른 기술 검증을 가능케 합니다.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="tech_5_h">Edge AI</h3>
+                    <p data-i18n="tech_5_p">지연 없는 실시간 판단을 위해 장치 내에서 직접 고성능 AI를 구동합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Physical AI Challenges -->
+    <section id="barriers">
+        <div class="container reveal-on-scroll">
+            <div class="section-title">
+                <h2 data-i18n="chall_title">Physical AI Challenges</h2>
+                <p data-i18n="chall_subtitle">기술적 임계점을 돌파하기 위한 혁신적 솔루션</p>
+            </div>
+            <div class="grid grid-3">
+                <div class="barrier-card">
+                    <div class="barrier-header">
+                        <div>
+                            <div class="badge-warning">Challenge 01</div>
+                            <h3 data-i18n="chall_1_h">데이터 부족</h3>
+                        </div>
+                        <div class="expand-icon">↓</div>
+                    </div>
+                    <div class="barrier-solution">
+                        <h4 style="color: var(--secondary-color); margin-bottom: 15px;">Solution: Simulation</h4>
+                        <p data-i18n="chall_1_p">디지털 트윈 기반의 가상 가속 학습을 통해 수억 시간의 데이터를 생성합니다.</p>
+                    </div>
+                </div>
+                <div class="barrier-card">
+                    <div class="barrier-header">
+                        <div>
+                            <div class="badge-warning">Challenge 02</div>
+                            <h3 data-i18n="chall_2_h">Sim2Real 격차</h3>
+                        </div>
+                        <div class="expand-icon">↓</div>
+                    </div>
+                    <div class="barrier-solution">
+                        <h4 style="color: var(--secondary-color); margin-bottom: 15px;">Solution: Adaptation</h4>
+                        <p data-i18n="chall_2_p">실시간 오차 수정 알고리즘을 적용하여 현실 세계에 즉각 최적화합니다.</p>
+                    </div>
+                </div>
+                <div class="barrier-card">
+                    <div class="barrier-header">
+                        <div>
+                            <div class="badge-warning">Challenge 03</div>
+                            <h3 data-i18n="chall_3_h">연산 지연</h3>
+                        </div>
+                        <div class="expand-icon">↓</div>
+                    </div>
+                    <div class="barrier-solution">
+                        <h4 style="color: var(--secondary-color); margin-bottom: 15px;">Solution: Edge AI</h4>
+                        <p data-i18n="chall_3_p">온디바이스 최적화를 통해 인터넷 연결 없이도 즉각적인 물리 제어가 가능합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Industry Applications -->
+    <section id="apps">
+        <div class="container reveal-on-scroll">
+            <div class="section-title">
+                <h2 data-i18n="app_title">Industry Applications</h2>
+                <p data-i18n="app_subtitle">글로벌 주요 산업군에서 실시간으로 발생하는 지능형 변화</p>
+            </div>
+            <div class="grid grid-4">
+                <div class="card industry-card-new">
+                    <div class="industry-icon">🏭</div>
+                    <h3 data-i18n="app_1_h">스마트 팩토리</h3>
+                    <div class="industry-details-hidden">
+                        <p data-i18n="app_1_p">자동 물류 및 지능형 생산 공정 혁신을 주도합니다.</p>
+                    </div>
+                </div>
+                <div class="card industry-card-new">
+                    <div class="industry-icon">🚗</div>
+                    <h3 data-i18n="app_2_h">자율주행</h3>
+                    <div class="industry-details-hidden">
+                        <p data-i18n="app_2_p">완벽한 주변 환경 인식을 통한 안전한 이동을 보장합니다.</p>
+                    </div>
+                </div>
+                <div class="card industry-card-new">
+                    <div class="industry-icon">🚁</div>
+                    <h3 data-i18n="app_3_h">무인 드론</h3>
+                    <div class="industry-details-hidden">
+                        <p data-i18n="app_3_p">자율 비행 및 고정밀 시설 점검 시스템을 구축합니다.</p>
+                    </div>
+                </div>
+                <div class="card industry-card-new">
+                    <div class="industry-icon">🏥</div>
+                    <h3 data-i18n="app_4_h">의료 로봇</h3>
+                    <div class="industry-details-hidden">
+                        <p data-i18n="app_4_p">정밀 수술 보조 및 환자 케어 자동화를 실현합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Global Leaders -->
+    <section id="leaders">
+        <div class="container reveal-on-scroll">
+            <div class="section-title">
+                <h2 data-i18n="leader_title">Global Leaders</h2>
+                <p data-i18n="leader_subtitle">Physical AI 분야를 선도하는 글로벌 테크 자이언트</p>
+            </div>
+            <div class="grid grid-4">
+                <div class="card leader-card">
+                    <div class="spotlight"></div>
+                    <div class="leader-logo">NVIDIA</div>
+                    <h4>Omniverse</h4>
+                </div>
+                <div class="card leader-card">
+                    <div class="spotlight"></div>
+                    <div class="leader-logo">Tesla</div>
+                    <h4>Optimus</h4>
+                </div>
+                <div class="card leader-card">
+                    <div class="spotlight"></div>
+                    <div class="leader-logo">Boston Dynamics</div>
+                    <h4>Spot</h4>
+                </div>
+                <div class="card leader-card">
+                    <div class="spotlight"></div>
+                    <div class="leader-logo">Figure AI</div>
+                    <h4>Figure 02</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Future Vision 2030 -->
+    <section id="vision">
+        <div class="container reveal-on-scroll">
+            <div class="section-title">
+                <h2 data-i18n="vision_title">Future Vision 2030</h2>
+                <p data-i18n="vision_subtitle">인간과 로봇이 공존하는 지능형 세상을 향한 로드맵</p>
+            </div>
+            <div class="grid grid-3" style="text-align: center; margin-bottom: 50px;">
+                <div class="card counter-box">
+                    <h2 class="counter" data-target="2030">0</h2>
+                    <p>Target Year</p>
+                </div>
+                <div class="card counter-box">
+                    <h2 class="counter" data-target="95">0</h2>
+                    <p>Automation Peak (%)</p>
+                </div>
+                <div class="card counter-box">
+                    <h2 class="counter" data-target="100">0</h2>
+                    <p>Global Connectivity</p>
+                </div>
+            </div>
+            <div class="vision-grid">
+                <div class="vision-card">
+                    <div class="vision-image-placeholder v-gradient-1"></div>
+                    <div class="vision-content">
+                        <span class="project-tag">Embodied AI</span>
+                        <h3 data-i18n="vision_1_h">Humanoid Era</h3>
+                        <p data-i18n="vision_1_p">가사 및 서비스 현장에서 인간과 완벽히 상호작용하는 휴머노이드 보급</p>
+                    </div>
+                </div>
+                <div class="vision-card">
+                    <div class="vision-image-placeholder v-gradient-2"></div>
+                    <div class="vision-content">
+                        <span class="project-tag">Smart Infrastructure</span>
+                        <h3 data-i18n="vision_2_h">AI Factory</h3>
+                        <p data-i18n="vision_2_p">생산부터 출하까지 전 과정이 지능형 로봇에 의해 자율적으로 운영되는 공장</p>
+                    </div>
+                </div>
+                <div class="vision-card">
+                    <div class="vision-image-placeholder v-gradient-3"></div>
+                    <div class="vision-content">
+                        <span class="project-tag">Next Mobility</span>
+                        <h3 data-i18n="vision_3_h">Level 5 World</h3>
+                        <p data-i18n="vision_3_p">사고 없는 도로와 하늘을 완성하는 완전 자율주행 모빌리티 생태계</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Go to top" aria-label="Back to Top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 60px 0;">
+            <p style="color: var(--text-muted); opacity: 0.6;">&copy; 2026 Physical AI Nexus. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

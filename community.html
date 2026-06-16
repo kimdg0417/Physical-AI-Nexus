@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community : Physical AI Nexus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Physical AI Nexus
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#evolution" data-i18n="nav_evolution">AI Evolution</a></li>
+                <li><a href="index.html#about" data-i18n="nav_about">Definition</a></li>
+                <li><a href="index.html#tech" data-i18n="nav_tech">Technologies</a></li>
+                <li><a href="index.html#apps" data-i18n="nav_apps">Applications</a></li>
+                <li><a href="community.html" class="active" data-i18n="nav_community">Community</a></li>
+            </ul>
+            <div class="nav-extra">
+                <select id="lang-selector" class="lang-select">
+                    <option value="ko">KO</option>
+                    <option value="en">EN</option>
+                    <option value="ja">JA</option>
+                    <option value="zh">ZH</option>
+                </select>
+                <button class="theme-toggle" id="theme-btn">Dark Mode</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container" style="padding-top: 150px;">
+        <div class="section-title">
+            <h2 data-i18n="comm_title">Community Lounge</h2>
+            <p data-i18n="comm_subtitle">미래 기술을 논하는 피지컬 AI 연구자들의 열린 공간입니다.</p>
+            <div style="margin-top: 20px;">
+                <a href="#contact" class="btn btn-outline" style="padding: 10px 20px;" data-i18n="comm_inquiry_btn">문의하기 (Inquiry)</a>
+            </div>
+        </div>
+        
+        <div class="community-grid">
+            <!-- Left: Form -->
+            <div class="glass-card">
+                <form id="post-form" class="board-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label data-i18n="form_name">Name</label>
+                            <input type="text" id="post-author" placeholder="작성자" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="form_pass">Password</label>
+                            <input type="password" id="post-password" placeholder="비밀번호" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label data-i18n="form_title">Title</label>
+                        <input type="text" id="post-title" placeholder="게시글 제목" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label data-i18n="form_content">Content</label>
+                        <textarea id="post-content" rows="6" placeholder="내용을 입력하세요..." required></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label data-i18n="form_file">Attachment</label>
+                        <input type="file" id="post-image" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 18px;" data-i18n="form_submit">게시글 등록하기</button>
+                </form>
+            </div>
+
+            <!-- Right: List -->
+            <div class="board-list" id="post-list">
+                <!-- Posts loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Inquiry Section -->
+    <section id="contact" class="container">
+        <div class="section-title">
+            <h2 data-i18n="contact_title">Direct Inquiry</h2>
+            <p data-i18n="contact_subtitle">기술 협력 및 비즈니스 문의</p>
+        </div>
+        
+        <div class="contact-wrapper glass-card">
+            <div class="contact-info-left">
+                <h3 style="color: var(--secondary-color); margin-bottom: 20px;" data-i18n="contact_info_h">Contact Info</h3>
+                <p style="color: var(--text-muted); margin-bottom: 30px;" data-i18n="contact_info_p">
+                    새로운 물리적 지능의 시대를 함께 열어갈 파트너를 기다립니다.
+                </p>
+                
+                <div class="info-details">
+                    <div class="info-item">
+                        <span class="info-label">EMAIL</span>
+                        <span class="info-value"><a href="mailto:kimdg0417@dongyang.ac.kr" style="color: inherit; text-decoration: none;">kimdg0417@dongyang.ac.kr</a></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-right">
+                <form class="direct-inquiry-form" id="inquiry-form">
+                    <div class="form-group">
+                        <label data-i18n="form_org">Organization</label>
+                        <input type="text" id="inquiry-org" placeholder="성함 또는 기업명" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form_email">Email</label>
+                        <input type="email" id="inquiry-email" placeholder="연락처 이메일" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="form_msg">Message</label>
+                        <textarea id="inquiry-msg" rows="4" placeholder="문의 내용을 입력하세요" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="form_send">Inquiry Send</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 60px 0;">
+            <p style="color: var(--text-muted); opacity: 0.6;">&copy; 2026 Physical AI Nexus. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
